@@ -29,7 +29,7 @@ admin_externalpage_setup('reportfilesize', '', null, '', array('pagelayout' => '
 
 $category = optional_param('category', 0, PARAM_INT);
 
-$table = new \report_kent\report_table('reportkent_studentactivity');
+$table = new \report_kent\report_table('reportkent_filesize');
 $table->sortable(false);
 $table->define_headers(array("Course", "File count", "Total file size"));
 $table->setup();
@@ -58,7 +58,11 @@ foreach ($results as $k => $item) {
         'target' => '_blank'
     ));
 
-    $table->add_data(array($course, $item["count"], \report_kent\reports\filesize::pretty_filesize($item["size"])));
+    $table->add_data(array(
+        $table->is_downloading() ? $item['shortname'] : $course,
+        $item["count"],
+        \report_kent\reports\filesize::pretty_filesize($item["size"])
+    ));
 }
 
 $table->finish_output();

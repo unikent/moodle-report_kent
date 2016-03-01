@@ -30,7 +30,7 @@ admin_externalpage_setup('reportconnectcourse', '', null, '', array('pagelayout'
 // Allow restriction by category.
 $category = optional_param('category', 0, PARAM_INT);
 
-$table = new \report_kent\report_table('reportkent_connectcourse');
+$table = new \report_kent\report_table('reportkent_connect');
 $table->define_headers(array(
     'Module Code',
     'Module Title',
@@ -86,7 +86,7 @@ if ($category !== 0) {
 
 $sql .= ' GROUP BY ce.courseid';
 
-$sortsql = \report_kent\report_table::get_sort_for_table('reportkent_connectcourse');
+$sortsql = \report_kent\report_table::get_sort_for_table('reportkent_connect');
 if (!empty($sortsql)) {
     $sql .= " ORDER BY $sortsql";
 }
