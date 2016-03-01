@@ -26,6 +26,12 @@ defined('MOODLE_INTERNAL') || die();
 
 if ($hassiteconfig) {
     $ADMIN->add('reports', new admin_externalpage(
+        'reportactivitiesreport',
+        'Category-Based Activity Usage',
+        new \moodle_url("/report/kent/reports/activities/index.php")
+    ));
+
+    $ADMIN->add('reports', new admin_externalpage(
         'reportconnectcourse',
         'Connect Courses',
         new \moodle_url("/report/kent/reports/connect/index.php")

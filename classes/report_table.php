@@ -41,11 +41,11 @@ class report_table extends \table_sql
     /**
      * @param string $uniqueid A string identifying this table.
      */
-    public function __construct($uniqueid) {
+    public function __construct($uniqueid, $defaultpagesize = 30) {
         parent::__construct($uniqueid);
 
         $this->_itemtotal = 0;
-        $this->_pagesize = optional_param('pagesize', 30, \PARAM_INT);
+        $this->_pagesize = optional_param('pagesize', $defaultpagesize, \PARAM_INT);
         $this->_pagenumber = optional_param('page', 0, \PARAM_INT);
         $this->_download = optional_param('download', '', \PARAM_ALPHA);
         $this->_ispaging = empty($this->_download);

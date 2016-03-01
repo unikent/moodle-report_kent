@@ -111,7 +111,7 @@ SQL;
         // Loop and count.
         $courses = $this->get_courses();
         foreach ($courses as $course) {
-           $total += $course->get_activity_count($activity);
+            $total += $course->get_activity_count($activity);
         }
 
         return $total;
@@ -127,7 +127,7 @@ SQL;
         $courses = $this->get_courses();
         foreach ($courses as $course) {
             if ($course->is_guest_enabled()) {
-               $total++;
+                $total++;
             }
         }
 
@@ -144,7 +144,7 @@ SQL;
         $courses = $this->get_courses();
         foreach ($courses as $course) {
             if ($course->has_guest_password()) {
-               $total++;
+                $total++;
             }
         }
 
