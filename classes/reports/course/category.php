@@ -103,6 +103,21 @@ SQL;
     }
 
     /**
+     * Count all courses with the given activity.
+     */
+    public function count_activity($activity) {
+        $total = 0;
+
+        // Loop and count.
+        $courses = $this->get_courses();
+        foreach ($courses as $course) {
+           $total += $course->get_activity_count($activity);
+        }
+
+        return $total;
+    }
+
+    /**
      * Count all courses with guest access.
      */
     public function count_guest() {
