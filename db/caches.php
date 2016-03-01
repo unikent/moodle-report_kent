@@ -27,7 +27,8 @@ defined('MOODLE_INTERNAL') || die();
 $definitions = array(
     'kentreports' => array(
         'mode' => cache_store::MODE_APPLICATION,
-        'ttl'  => 3600, // Cache for 1 hour.
+        'ttl'  => 3600,
+        'simplekeys' => true,
         'staticacceleration' => true,
         'staticaccelerationsize' => 12
     )

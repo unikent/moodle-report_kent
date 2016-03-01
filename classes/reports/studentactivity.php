@@ -92,7 +92,7 @@ class studentactivity
     public function get_courses() {
         global $DB;
 
-        $cachekey = "courses";
+        $cachekey = "sa_courses";
         if (isset($this->category)) {
             $cachekey .= "_{$this->category}";
         }
@@ -149,6 +149,8 @@ class studentactivity
      */
     private function grab_data($cachekey, $sql) {
         global $DB;
+
+        $cachekey = "sa_{$cachekey}";
 
         $result = $this->cache->get($cachekey);
 
