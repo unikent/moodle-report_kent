@@ -24,10 +24,10 @@
   */
 define(['jquery', 'core/url'], function($, url) {
     return {
-        init_menu_category: function(report) {
-            $('#menucategory').on('change', function (e) {
+        init_menu_category: function(selector, report, param) {
+            $(selector).on('change', function (e) {
             	var id = $(this).val();
-            	window.location = url.relativeUrl("/report/kent/reports/" + report + "/index.php?category=" + id)
+            	window.location = url.relativeUrl("/report/kent/reports/" + report + "/index.php?" + param + "=" + id)
             });
         }
     };

@@ -35,7 +35,7 @@ $table->define_headers(array("Course", "File count", "Total file size"));
 $table->setup();
 
 if (!$table->is_downloading()) {
-    $PAGE->requires->js_call_amd('report_kent/reports', 'init_menu_category', array('filesize'));
+    $PAGE->requires->js_call_amd('report_kent/reports', 'init_menu_category', array('#menucategory', 'filesize', 'category'));
 
     echo $OUTPUT->header();
     echo $OUTPUT->heading('Filesize Report');

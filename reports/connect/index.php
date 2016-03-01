@@ -42,7 +42,7 @@ $table->define_headers(array(
 $table->setup();
 
 if (!$table->is_downloading()) {
-    $PAGE->requires->js_call_amd('report_kent/reports', 'init_menu_category', array('connect'));
+    $PAGE->requires->js_call_amd('report_kent/reports', 'init_menu_category', array('#menucategory', 'connect', 'category'));
 
     echo $OUTPUT->header();
     echo $OUTPUT->heading("Connect Course Report");

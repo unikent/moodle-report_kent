@@ -40,7 +40,7 @@ $table->define_headers($headers);
 $table->setup();
 
 if (!$table->is_downloading()) {
-    $PAGE->requires->js_call_amd('report_kent/reports', 'init_menu_category', array('studentactivity'));
+    $PAGE->requires->js_call_amd('report_kent/reports', 'init_menu_category', array('#menucategory', 'studentactivity', 'category'));
 
     echo $OUTPUT->header();
     echo $OUTPUT->heading('Student Activity');
