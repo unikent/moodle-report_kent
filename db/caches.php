@@ -22,8 +22,13 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-defined('MOODLE_INTERNAL') || die;
+defined('MOODLE_INTERNAL') || die();
 
-$plugin->version   = 2016030101;
-$plugin->requires  = 2015111602;
-$plugin->component = 'report_kent';
+$definitions = array(
+    'kentreports' => array(
+        'mode' => cache_store::MODE_APPLICATION,
+        'ttl'  => 3600, // Cache for 1 hour.
+        'staticacceleration' => true,
+        'staticaccelerationsize' => 12
+    )
+);
