@@ -29,15 +29,6 @@ admin_externalpage_setup('coursecatcountsreport', '', null, '', array(
     'pagelayout' => 'report'
 ));
 
-$PAGE->set_url(new \moodle_url('/report/coursecatcounts/beta.php'));
-$PAGE->set_context(\context_system::instance());
-
-$category = optional_param('category', false, PARAM_INT);
-$format = optional_param('format', 'screen', PARAM_ALPHA);
-if ($format != 'csv') {
-    $format = 'screen';
-}
-
 // Create Table.
 $table = new \report_kent\report_table('coursecatcountsreport');
 $table->sortable(false);
@@ -54,11 +45,6 @@ $table->define_headers(array(
 $table->setup();
 
 if (!$table->is_downloading()) {
-    $PAGE->requires->js_init_call('M.report_categories.init', array(), false, array(
-        'name' => 'report_coursecatcounts',
-        'fullpath' => '/report/coursecatcounts/scripts/categories.js'
-    ));
-
     echo $OUTPUT->header();
     echo $OUTPUT->heading("Category-Based Course Report");
 }
@@ -72,27 +58,15 @@ foreach ($report->get_categories() as $category) {
     $table->add_data(array(
         $link,
         $category->count_courses(),
-        $category->count_courses(\report_coursecatcounts\course::STATUS_UNUSED),
-        $category->count_courses(\report_coursecatcounts\course::STATUS_ACTIVE),
-        $category->count_courses(\report_coursecatcounts\course::STATUS_RESTING),
-        $category->count_courses(\report_coursecatcounts\course::STATUS_EMPTY),
+        $category->count_courses(\report_kent\reports\course\course::STATUS_UNUSED),
+        $category->count_courses(\report_kent\reports\course\course::STATUS_ACTIVE),
+        $category->count_courses(\report_kent\reports\course\course::STATUS_RESTING),
+        $category->count_courses(\report_kent\reports\course\course::STATUS_EMPTY),
         $category->count_guest(),
         $category->count_guest_passwords()
     ), $category->id);
 }
 
 $table->finish_output();
-
-// Output to screen.
-if (!$table->is_downloading()) {
-    // Show a back link for category view.
-    if ($category) {
-        echo \html_writer::tag('a', 'Back', array(
-            'href' => new \moodle_url('/report/coursecatcounts/beta.php')
-        ));
-    } else {
-        echo\html_writer::empty_tag('hr');
-    }
-}
 
 echo $OUTPUT->footer();

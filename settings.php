@@ -47,7 +47,7 @@ if ($hassiteconfig) {
     $ADMIN->add('reports', new admin_externalpage(
         'coursemodulecountsreport',
         'Category-Based Activity Counts',
-        new \moodle_url("/report/kent/reports/category/activity.php")
+        new \moodle_url("/report/kent/reports/category/choose_activity.php")
     ));
 
     $ADMIN->add('reports', new admin_externalpage(
