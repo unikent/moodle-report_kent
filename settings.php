@@ -18,7 +18,7 @@
  * Kent's custom reports in one plugin.
  *
  * @package    report_kent
- * @copyright  2016 Skylar Kelty <S.Kelty@kent.ac.uk
+ * @copyright  2016 Skylar Kelty <S.Kelty@kent.ac.uk>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -29,6 +29,7 @@ if ($hassiteconfig) {
     $ADMIN->add('reports', new admin_externalpage('reportstudentactivity', 'Student Activity', new \moodle_url("/report/kent/reports/studentactivity/index.php")));
     $ADMIN->add('reports', new admin_externalpage('reportfilesize', 'Filesize', new \moodle_url("/report/kent/reports/filesize/index.php")));
     $ADMIN->add('reports', new admin_externalpage('reportkentplayer', 'Kentplayer Report', new \moodle_url("/report/kent/reports/kentplayer/index.php")));
+    $ADMIN->add('reports', new admin_externalpage('reportdeadlines', 'Deadlines', new \moodle_url("/report/kent/reports/deadlines/index.php")));
 
     // No report settings.
     $settings = null;

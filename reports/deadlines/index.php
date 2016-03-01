@@ -25,43 +25,45 @@
 require(dirname(__FILE__) . '/../../../../config.php');
 require_once($CFG->libdir . '/adminlib.php');
 
-admin_externalpage_setup('reportfilesize', '', null, '', array('pagelayout' => 'report'));
+admin_externalpage_setup('reportdeadlines', '', null, '', array('pagelayout' => 'report'));
 
-$category = optional_param('category', 0, PARAM_INT);
+// Page parameters.
+$showpast = optional_param('showpast', 0, PARAM_BOOL);
 
 $table = new \report_kent\report_table('reportkent_filesize');
 $table->sortable(false);
-$table->define_headers(array("Course", "File count", "Total file size"));
+$table->define_headers(array(
+    "Type",
+    "Module Shortcode",
+    "Activity Name",
+    "Start Date",
+    "Due Date",
+    "Actions",
+    "Students on course"
+));
 $table->setup();
 
 if (!$table->is_downloading()) {
-    $PAGE->requires->js_call_amd('report_kent/reports', 'init_menu_category', array('#menucategory', 'filesize', 'category'));
+    $PAGE->requires->js_call_amd('report_kent/reports', 'init_menu_category', array('#showpastchk', 'deadlines', 'showpast'));
 
     echo $OUTPUT->header();
-    echo $OUTPUT->heading('Filesize Report');
+    echo $OUTPUT->heading('Deadlines Report');
 
-    // Allow restriction by category.
-    $select = array(
-        0 => "All"
-    );
-    $categories = $DB->get_records('course_categories', null, 'name', 'id,name');
-    foreach ($categories as $obj) {
-        $select[$obj->id] = $obj->name;
-    }
-    echo html_writer::select($select, 'category', $category);
+    echo \html_writer::checkbox('showpast', true, $showpast, 'Show Past Deadlines?', array(
+        'id' => 'showpastchk'
+    ));
 }
 
-$results = \report_kent\reports\filesize::get_result_set($category);
-foreach ($results as $k => $item) {
-    $course = \html_writer::tag('a', $item['shortname'], array(
-        'href' => new \moodle_url('/course/view.php', array('id' => $item['cid'])),
-        'target' => '_blank'
-    ));
-
+$deadlines = \report_kent\reports\deadlines\report::get_deadlines($showpast);
+foreach ($deadlines as $data) {
     $table->add_data(array(
-        $table->is_downloading() ? $item['shortname'] : $course,
-        $item["count"],
-        \report_kent\reports\filesize::pretty_filesize($item["size"])
+        s($data->type),
+        s($data->course),
+        s($data->name),
+        date("Y-m-d H:i", $data->start),
+        date("Y-m-d H:i", $data->end),
+        s($data->activity),
+        s($data->enrolled_students)
     ));
 }
 

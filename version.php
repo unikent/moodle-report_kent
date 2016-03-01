@@ -18,7 +18,7 @@
  * Kent's custom reports in one plugin.
  *
  * @package    report_kent
- * @copyright  2016 Skylar Kelty <S.Kelty@kent.ac.uk
+ * @copyright  2016 Skylar Kelty <S.Kelty@kent.ac.uk>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
