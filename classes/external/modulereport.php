@@ -53,10 +53,11 @@ class modulereport extends external_api
      * @return array[string]
      */
     public static function get_course_info() {
-        $categories = \report_kent\reports\modulereport::get_modules_by_category();
+        $obj = new \report_kent\reports\modulereport();
+        $categories = $obj->get_modules_by_category();
 
         $modnames = array();
-        $dbmodules = \report_kent\reports\modulereport::get_modules();
+        $dbmodules = $obj->get_modules();
         foreach ($dbmodules as $id => $module) {
             $modnames[$id] = get_string('modulename', 'mod_' . $module);
         }
