@@ -65,7 +65,7 @@ SQL;
         }
 
         foreach ($content as $id => $data) {
-            $cache->set("turnitin_{$id}", $data);
+            $cache->set("course_tii_{$id}", $data);
         }
 
         return $content[$course];

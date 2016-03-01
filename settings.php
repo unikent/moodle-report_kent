@@ -26,9 +26,40 @@ defined('MOODLE_INTERNAL') || die();
 
 if ($hassiteconfig) {
     $ADMIN->add('reports', new admin_externalpage(
+        'kentoverviewreport',
+        'Kent Overview',
+        new \moodle_url("/report/kent/reports/overview/index.php")
+    ));
+
+    $ADMIN->add('reports', new admin_externalpage(
         'reportactivitiesreport',
         'Category-Based Activity Usage',
         new \moodle_url("/report/kent/reports/activities/index.php")
+    ));
+
+
+    $ADMIN->add('reports', new admin_externalpage(
+        'coursecatcountsreport',
+        'Category-Based Course Counts',
+        new \moodle_url("/report/kent/reports/category/index.php")
+    ));
+
+    $ADMIN->add('reports', new admin_externalpage(
+        'coursemodulecountsreport',
+        'Category-Based Activity Counts',
+        new \moodle_url("/report/kent/reports/category/activity.php")
+    ));
+
+    $ADMIN->add('reports', new admin_externalpage(
+        'courseturnitincountsreport',
+        'Category-Based Turnitin Counts',
+        new \moodle_url("/report/kent/reports/category/turnitin.php")
+    ));
+
+    $ADMIN->add('reports', new admin_externalpage(
+        'manualcoursereport',
+        'Manual Courses',
+        new \moodle_url("/report/kent/reports/courses/manual.php")
     ));
 
     $ADMIN->add('reports', new admin_externalpage(

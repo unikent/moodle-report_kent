@@ -1,3 +1,4 @@
+<?php
 // This file is part of Moodle - http://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
@@ -13,32 +14,37 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
-/*
+/**
+ * Kent's custom reports in one plugin.
+ *
  * @package    report_kent
  * @copyright  2016 Skylar Kelty <S.Kelty@kent.ac.uk>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
- /**
-  * @module report_kent/reports
-  */
-define(['jquery', 'core/url'], function($, url) {
-    return {
-        init_menu_category: function(selector, report, param) {
-            $(selector).on('change', function (e) {
-            	var id = $(this).val();
-            	window.location = url.relativeUrl("/report/kent/reports/" + report + "/index.php?" + param + "=" + id)
-            });
-        },
+namespace report_kent\forms;
 
-        init_manual_toggle: function() {
-            $("#excludemanual").on('change', function(e) {
-                if ($(this).is(":checked")) {
-                    window.location = url.relativeUrl('/report/coursecatcounts/overview.php?excludemanual=1');
-                } else {
-                    window.location = url.relativeUrl('/report/coursecatcounts/overview.php?excludemanual=0');
-                }
-            });
+defined('MOODLE_INTERNAL') || die();
+
+require_once($CFG->dirroot . '/lib/formslib.php');
+
+class activity_select extends \moodleform
+{
+    /**
+     * Form definition
+     */
+    public function definition() {
+        global $DB;
+
+        $activities = array();
+        $records = $DB->get_records('modules');
+        foreach ($records as $record) {
+            $activities[$record->name] = get_string('modulename', $record->name);
         }
-    };
-});
+
+        $mform =& $this->_form;
+        $mform->addElement('select', 'activity', 'Activity', $activities);
+
+        $this->add_action_buttons(false, "Run Report");
+    }
+}
