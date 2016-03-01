@@ -25,25 +25,20 @@
 require(dirname(__FILE__) . '/../../../../config.php');
 require_once($CFG->libdir . '/adminlib.php');
 
-admin_externalpage_setup('reportstudentactivity', '', null, '', array('pagelayout' => 'report'));
+admin_externalpage_setup('reportfilesize', '', null, '', array('pagelayout' => 'report'));
 
 $category = optional_param('category', 0, PARAM_INT);
 
-$headers = array('Course');
-foreach (\report_kent\reports\studentactivity::get_types() as $type) {
-    $headers[] = get_string("satype_{$type}", 'report_kent');
-}
-
 $table = new \report_kent\report_table('reportkent_studentactivity');
 $table->sortable(false);
-$table->define_headers($headers);
+$table->define_headers(array("Course", "File count", "Total file size"));
 $table->setup();
 
 if (!$table->is_downloading()) {
-    $PAGE->requires->js_call_amd('report_kent/reports', 'init_menu_category', array('studentactivity'));
+    $PAGE->requires->js_call_amd('report_kent/reports', 'init_menu_category', array('filesize'));
 
     echo $OUTPUT->header();
-    echo $OUTPUT->heading('Student Activity');
+    echo $OUTPUT->heading('Filesize Report');
 
     // Allow restriction by category.
     $select = array(
@@ -56,25 +51,14 @@ if (!$table->is_downloading()) {
     echo html_writer::select($select, 'category', $category);
 }
 
-$core = new \report_kent\reports\studentactivity();
-if ($category !== 0) {
-    $core->set_category($category);
-}
-
-// Display the data.
-$courses = $core->get_courses();
-foreach ($courses as $course) {
-    $data = array(\html_writer::tag('a', $course->shortname, array(
-        'href' => new \moodle_url('/course/view.php', array('id' => $course->id)),
+$results = \report_kent\reports\filesize::get_result_set($category);
+foreach ($results as $k => $item) {
+    $course = \html_writer::tag('a', $item['shortname'], array(
+        'href' => new \moodle_url('/course/view.php', array('id' => $item['cid'])),
         'target' => '_blank'
-    )));
+    ));
 
-    foreach (\report_kent\reports\studentactivity::get_types() as $type) {
-        $var = "{$type}_count";
-        $data[] = $course->$var;
-    }
-
-    $table->add_data($data);
+    $table->add_data(array($course, $item["count"], \report_kent\reports\filesize::pretty_filesize($item["size"])));
 }
 
 $table->finish_output();
