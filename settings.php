@@ -25,6 +25,8 @@
 defined('MOODLE_INTERNAL') || die();
 
 if ($hassiteconfig) {
+    $ADMIN->add('reports', new admin_externalpage('reportconnectcourse', "Connect Courses", new \moodle_url("/report/kent/reports/connect/index.php")));
+
     // No report settings.
     $settings = null;
 }

@@ -57,7 +57,7 @@ class report_table extends \table_sql
     public function setup() {
         global $PAGE;
 
-        $this->is_downloading($this->download, $this->uniqueid, $this->uniqueid);
+        $this->is_downloading($this->_download, $this->uniqueid, $this->uniqueid);
 
         // Copy columns into headers if we have no columns defined.
         if (empty($this->columns) && !empty($this->headers)) {
