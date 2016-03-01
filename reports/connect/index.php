@@ -15,15 +15,15 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Connect reports
+ * Kent's custom reports in one plugin.
  *
- * @package    report_connect
- * @copyright  2016 Skylar Kelty <S.Kelty@kent.ac.uk>
+ * @package    report_kent
+ * @copyright  2016 Skylar Kelty <S.Kelty@kent.ac.uk
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-require(dirname(__FILE__).'/../../../../config.php');
-require_once($CFG->libdir.'/adminlib.php');
+require(dirname(__FILE__) . '/../../../../config.php');
+require_once($CFG->libdir . '/adminlib.php');
 
 admin_externalpage_setup('reportconnectcourse', '', null, '', array('pagelayout' => 'report'));
 
@@ -54,7 +54,7 @@ $table->define_headers(array(
 $table->setup();
 
 if (!$table->is_downloading()) {
-    $PAGE->requires->js_call_amd('report_kent/reports', 'init_connect', array());
+    $PAGE->requires->js_call_amd('report_kent/reports', 'init_menu_category', array('connect'));
 
     echo $OUTPUT->header();
     echo $OUTPUT->heading("Connect Course Report");

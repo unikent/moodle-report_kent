@@ -23,3 +23,15 @@
  */
 
 $string['pluginname'] = 'Kent Reports';
+$string['cachedef_kentreports'] = 'Kent Reports Data';
+
+$string['satype_quiz'] = 'Quiz Attempts';
+$string['satype_forum'] = 'Forum Posts';
+$string['satype_turnitintool'] = 'Turnitin Submissions';
+$string['satype_turnitintooltwo'] = 'Turnitin 2 Submissions';
+$string['satype_assignment'] = 'Assignment Submissions';
+$string['satype_choice'] = 'Choice Responses';
+$string['satype_ouwiki'] = 'Wiki Edits';
+$string['satype_questionnaire'] = 'Questionnaire Responses';
+$string['satype_scorm'] = 'SCORM Attempts';
+$string['satype_total'] = 'Total Activity';
