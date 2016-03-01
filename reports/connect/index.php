@@ -54,11 +54,7 @@ $table->define_headers(array(
 $table->setup();
 
 if (!$table->is_downloading()) {
-    // TODO.
-    $PAGE->requires->js_init_call('M.report_connect.init', array(), false, array(
-        'name' => 'report_connect',
-        'fullpath' => '/report/connect/module.js'
-    ));
+    $PAGE->requires->js_call_amd('report_kent/reports', 'init_connect', array());
 
     echo $OUTPUT->header();
     echo $OUTPUT->heading("Connect Course Report");
