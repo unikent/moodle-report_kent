@@ -29,18 +29,6 @@ admin_externalpage_setup('reportconnectcourse', '', null, '', array('pagelayout'
 
 // Allow restriction by category.
 $category = optional_param('category', 0, PARAM_INT);
-$select = array(
-    0 => "All"
-);
-$categories = $DB->get_records_sql('SELECT cc.id, cc.name
-    FROM {connect_course} c
-    INNER JOIN {course_categories} cc ON cc.id=c.category
-    GROUP BY c.category
-    ORDER BY cc.name DESC
-');
-foreach ($categories as $obj) {
-    $select[$obj->id] = $obj->name;
-}
 
 $table = new \report_kent\report_table('reportkent_connectcourse');
 $table->define_headers(array(
@@ -59,6 +47,18 @@ if (!$table->is_downloading()) {
     echo $OUTPUT->header();
     echo $OUTPUT->heading("Connect Course Report");
 
+    $select = array(
+        0 => "All"
+    );
+    $categories = $DB->get_records_sql('SELECT cc.id, cc.name
+        FROM {connect_course} c
+        INNER JOIN {course_categories} cc ON cc.id=c.category
+        GROUP BY c.category
+        ORDER BY cc.name DESC
+    ');
+    foreach ($categories as $obj) {
+        $select[$obj->id] = $obj->name;
+    }
     echo html_writer::select($select, 'category', $category);
 }
 
