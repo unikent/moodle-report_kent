@@ -31,28 +31,9 @@ admin_externalpage_setup('coursemodulecountsreport', '', null, '', array(
 
 $activity = required_param('activity', PARAM_PLUGIN);
 
-$data = array();
-$report = new \report_kent\reports\course\core();
-foreach ($report->get_categories() as $category) {
-    $data[] = (object)array(
-        'categoryid' => $category->id,
-        'name' => $category->name,
-        'path' => $category->path,
-        'total' => $category->count_courses(),
-        'total_activity_count' => $category->count_courses(null, $activity),
-        'ceased' => $category->count_courses(\report_kent\reports\course\course::STATUS_UNUSED),
-        'ceased_activity_count' => $category->count_courses(\report_kent\reports\course\course::STATUS_UNUSED, $activity),
-        'active' => $category->count_courses(\report_kent\reports\course\course::STATUS_ACTIVE),
-        'active_activity_count' => $category->count_courses(\report_kent\reports\course\course::STATUS_ACTIVE, $activity),
-        'resting' => $category->count_courses(\report_kent\reports\course\course::STATUS_RESTING),
-        'resting_activity_count' => $category->count_courses(\report_kent\reports\course\course::STATUS_RESTING, $activity),
-        'inactive' => $category->count_courses(\report_kent\reports\course\course::STATUS_EMPTY),
-        'inactive_activity_count' => $category->count_courses(\report_kent\reports\course\course::STATUS_EMPTY, $activity)
-    );
-}
-
-// Run CSV.
-$headings = array(
+$table = new \report_kent\report_table('reportkent_catact');
+$table->sortable(false);
+$table->define_headers(array(
     'Category',
     'Total Modules',
     'Total Modules with activity',
@@ -64,56 +45,42 @@ $headings = array(
     'Resting Modules with activity',
     'Empty Modules',
     'Empty Modules with activity'
-);
+));
+$table->setup();
 
-$countcolumns = array(
-    'total' => '',
-    'total_activity_count' => '',
-    'ceased' => '',
-    'ceased_activity_count' => \report_kent\reports\course\course::STATUS_UNUSED,
-    'active' => '',
-    'active_activity_count' => \report_kent\reports\course\course::STATUS_ACTIVE,
-    'resting' => '',
-    'resting_activity_count' => \report_kent\reports\course\course::STATUS_RESTING,
-    'inactive' => '',
-    'inactive_activity_count' => \report_kent\reports\course\course::STATUS_EMPTY
-);
-
-$table = new \html_table();
-$table->head = $headings;
-$table->attributes['class'] = 'admintable generaltable';
-$table->data = array();
-foreach ($data as $row) {
-    $category = str_pad($row->name, substr_count($row->path, 1), '-');
-    $category = \html_writer::tag('a', $category, array(
-        'href' => new \moodle_url('/course/index.php', array(
-            'categoryid' => $row->categoryid
-        ))
-    ));
-
-    $columns = array(
-        new html_table_cell($category)
-    );
-
-    foreach ($countcolumns as $column => $status) {
-        $cell = new html_table_cell($row->$column);
-        $cell->attributes['class'] = "datacell " . $column;
-        if ($status) {
-            $cell->attributes['column'] = $status;
-        }
-        $cell->attributes['catid'] = $row->categoryid;
-        $columns[] = $cell;
-    }
-
-    $obj = new html_table_row($columns);
-    $obj->attributes['class'] = 'datarow';
-    $table->data[] = $obj;
+if (!$table->is_downloading()) {
+    echo $OUTPUT->header();
+    echo $OUTPUT->heading("Category-Based Activity Report");
 }
 
-echo $OUTPUT->header();
-echo $OUTPUT->heading("Category-Based Activity Report");
+$data = array();
+$categories = \coursecat::make_categories_list();
+$report = new \report_kent\reports\course\core();
+foreach ($report->get_categories() as $category) {
+    $catname = $categories[$category->id];
+    if (!$table->is_downloading()) {
+        $catname = \html_writer::tag('a', $catname, array(
+            'href' => new \moodle_url('/course/index.php', array(
+                'categoryid' => $category->id
+            ))
+        ));
+    }
 
-echo \html_writer::table($table);
-echo \html_writer::empty_tag('hr');
+    $table->add_data(array(
+        $catname,
+        $category->count_courses(),
+        $category->count_courses(null, $activity),
+        $category->count_courses(\report_kent\reports\course\course::STATUS_UNUSED),
+        $category->count_courses(\report_kent\reports\course\course::STATUS_UNUSED, $activity),
+        $category->count_courses(\report_kent\reports\course\course::STATUS_ACTIVE),
+        $category->count_courses(\report_kent\reports\course\course::STATUS_ACTIVE, $activity),
+        $category->count_courses(\report_kent\reports\course\course::STATUS_RESTING),
+        $category->count_courses(\report_kent\reports\course\course::STATUS_RESTING, $activity),
+        $category->count_courses(\report_kent\reports\course\course::STATUS_EMPTY),
+        $category->count_courses(\report_kent\reports\course\course::STATUS_EMPTY, $activity)
+    ));
+}
+
+$table->finish_output();
 
 echo $OUTPUT->footer();
