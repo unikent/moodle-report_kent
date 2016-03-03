@@ -25,84 +25,88 @@
 defined('MOODLE_INTERNAL') || die();
 
 if ($hassiteconfig) {
-    $ADMIN->add('reports', new admin_externalpage(
+    $category = new admin_category('kentreports', 'Kent Reports');
+
+    $category->add('kentreports', new admin_externalpage(
         'kentoverviewreport',
         'Kent Overview',
         new \moodle_url("/report/kent/reports/overview/index.php")
     ));
 
-    $ADMIN->add('reports', new admin_externalpage(
+    $category->add('kentreports', new admin_externalpage(
         'reportactivitiesreport',
         'Category-Based Activity Usage',
         new \moodle_url("/report/kent/reports/activities/index.php")
     ));
 
 
-    $ADMIN->add('reports', new admin_externalpage(
+    $category->add('kentreports', new admin_externalpage(
         'coursecatcountsreport',
         'Category-Based Course Counts',
         new \moodle_url("/report/kent/reports/category/index.php")
     ));
 
-    $ADMIN->add('reports', new admin_externalpage(
+    $category->add('kentreports', new admin_externalpage(
         'coursemodulecountsreport',
         'Category-Based Activity Counts',
         new \moodle_url("/report/kent/reports/category/choose_activity.php")
     ));
 
-    $ADMIN->add('reports', new admin_externalpage(
+    $category->add('kentreports', new admin_externalpage(
         'courseturnitincountsreport',
         'Category-Based Turnitin Counts',
         new \moodle_url("/report/kent/reports/category/turnitin.php")
     ));
 
-    $ADMIN->add('reports', new admin_externalpage(
+    $category->add('kentreports', new admin_externalpage(
         'manualcoursereport',
         'Manual Courses',
         new \moodle_url("/report/kent/reports/courses/manual.php")
     ));
 
-    $ADMIN->add('reports', new admin_externalpage(
+    $category->add('kentreports', new admin_externalpage(
         'reportconnectcourse',
         'Connect Courses',
         new \moodle_url("/report/kent/reports/connect/index.php")
     ));
 
-    $ADMIN->add('reports', new admin_externalpage(
+    $category->add('kentreports', new admin_externalpage(
         'reportstudentactivity',
         'Student Activity',
         new \moodle_url("/report/kent/reports/studentactivity/index.php")
     ));
 
-    $ADMIN->add('reports', new admin_externalpage(
+    $category->add('kentreports', new admin_externalpage(
         'reportfilesize',
         'Filesize',
         new \moodle_url("/report/kent/reports/filesize/index.php")
     ));
 
-    $ADMIN->add('reports', new admin_externalpage(
+    $category->add('kentreports', new admin_externalpage(
         'reportkentplayer',
         'Kentplayer Report',
         new \moodle_url("/report/kent/reports/kentplayer/index.php")
     ));
 
-    $ADMIN->add('reports', new admin_externalpage(
+    $category->add('kentreports', new admin_externalpage(
         'reportdeadlines',
         'Deadlines',
         new \moodle_url("/report/kent/reports/deadlines/index.php")
     ));
 
-    $ADMIN->add('reports', new admin_externalpage(
+    $category->add('kentreports', new admin_externalpage(
         'reportturnitinaudit',
         'Turnitin Audit',
         new \moodle_url("/report/kent/reports/turnitinaudit/index.php")
     ));
 
-    $ADMIN->add('reports', new admin_externalpage(
+    $category->add('kentreports', new admin_externalpage(
         'reportturnitingrademark',
         'Turnitin Grademark Usage',
         new \moodle_url("/report/kent/reports/turnitinaudit/grademark.php")
     ));
+
+    $ADMIN->add('reports', $category);
 
     // No report settings.
     $settings = null;
