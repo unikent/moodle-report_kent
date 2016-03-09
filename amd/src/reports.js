@@ -34,9 +34,9 @@ define(['jquery', 'core/url'], function($, url) {
         init_manual_toggle: function() {
             $("#excludemanual").on('change', function(e) {
                 if ($(this).is(":checked")) {
-                    window.location = url.relativeUrl('/report/coursecatcounts/overview.php?excludemanual=1');
+                    window.location = url.relativeUrl('/report/kent/reports/overview/index.php?excludemanual=1');
                 } else {
-                    window.location = url.relativeUrl('/report/coursecatcounts/overview.php?excludemanual=0');
+                    window.location = url.relativeUrl('/report/kent/reports/overview/index.php?excludemanual=0');
                 }
             });
         }

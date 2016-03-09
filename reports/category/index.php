@@ -49,11 +49,12 @@ if (!$table->is_downloading()) {
     echo $OUTPUT->heading("Category-Based Course Report");
 }
 
+$categories = \coursecat::make_categories_list();
 $report = new \report_kent\reports\course\core();
 foreach ($report->get_categories() as $category) {
-    $link = \html_writer::link(new \moodle_url('/report/coursecatcounts/beta.php', array(
-        'category' => $category->id
-    )), $category->name);
+    $link = \html_writer::link(new \moodle_url('/course/index.php', array(
+        'categoryid' => $category->id
+    )), $categories[$category->id]);
 
     $table->add_data(array(
         $link,
