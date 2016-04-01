@@ -30,6 +30,7 @@ $definitions = array(
         'ttl'  => 3600,
         'simplekeys' => true,
         'staticacceleration' => true,
-        'staticaccelerationsize' => 5000
+        'staticaccelerationsize' => 5000,
+        'canuselocalstore' => true
     )
 );
