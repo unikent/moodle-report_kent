@@ -53,6 +53,9 @@ if (!$table->is_downloading()) {
     echo $OUTPUT->heading("Category-Based Activity Report");
 }
 
+// Write close here, this could take a while...
+\core\session\manager::write_close();
+
 $data = array();
 $categories = \coursecat::make_categories_list();
 $report = new \report_kent\reports\course\core();

@@ -45,6 +45,9 @@ if (!$table->is_downloading()) {
     echo $OUTPUT->heading('Category-Based Activity Usage');
 }
 
+// Write close here, this could take a while...
+\core\session\manager::write_close();
+
 $report = new \report_kent\reports\course\core();
 $category = $report->get_category($categoryid);
 foreach ($category->get_courses() as $course) {

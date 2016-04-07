@@ -47,6 +47,9 @@ if (!$table->is_downloading()) {
     echo $OUTPUT->heading('Turnitin Audit Report');
 }
 
+// Write close here, this could take a while...
+\core\session\manager::write_close();
+
 $orderby = \report_kent\report_table::get_sort_for_table('reportkent_turnitinaudit');
 $result = \report_kent\reports\turnitin\audit::get_assignments($orderby);
 foreach ($result as $data) {

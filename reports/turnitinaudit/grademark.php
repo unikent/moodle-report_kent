@@ -43,6 +43,9 @@ if (!$table->is_downloading()) {
     echo $OUTPUT->heading('Turnitin Grademark Report');
 }
 
+// Write close here, this could take a while...
+\core\session\manager::write_close();
+
 $assignments = \report_kent\reports\turnitin\grademark::get_assignments();
 foreach ($assignments as $data) {
     $table->add_data(array(

@@ -72,6 +72,9 @@ if (!$table->is_downloading()) {
     echo \html_writer::empty_tag('input', $tagparams) . ' Exclude manual';
 }
 
+// Write close here, this could take a while...
+\core\session\manager::write_close();
+
 $categories = \coursecat::make_categories_list();
 
 $done = array();

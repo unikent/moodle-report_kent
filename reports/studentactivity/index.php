@@ -56,6 +56,9 @@ if (!$table->is_downloading()) {
     echo html_writer::select($select, 'category', $category);
 }
 
+// Write close here, this could take a while...
+\core\session\manager::write_close();
+
 $core = new \report_kent\reports\studentactivity();
 if ($category !== 0) {
     $core->set_category($category);

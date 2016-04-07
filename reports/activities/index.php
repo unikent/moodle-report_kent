@@ -43,6 +43,9 @@ if (!$table->is_downloading()) {
     echo $OUTPUT->heading('Category-Based Activity Usage');
 }
 
+// Write close here, this could take a while...
+\core\session\manager::write_close();
+
 $report = new \report_kent\reports\course\core();
 foreach ($report->get_categories() as $category) {
     $link = \html_writer::link(new \moodle_url('/report/kent/reports/activities/category.php', array(

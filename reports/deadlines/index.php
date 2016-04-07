@@ -54,6 +54,9 @@ if (!$table->is_downloading()) {
     ));
 }
 
+// Write close here, this could take a while...
+\core\session\manager::write_close();
+
 $deadlines = \report_kent\reports\deadlines\report::get_deadlines($showpast);
 foreach ($deadlines as $data) {
     $table->add_data(array(

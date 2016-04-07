@@ -47,6 +47,9 @@ if (!$table->is_downloading()) {
 
 $categories = \coursecat::make_categories_list();
 
+// Write close here, this could take a while...
+\core\session\manager::write_close();
+
 $report = new \report_kent\reports\course\core();
 foreach ($report->get_categories() as $category) {
     $categorylink = \html_writer::tag('a', $categories[$category->id], array(
