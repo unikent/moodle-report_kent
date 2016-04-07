@@ -40,20 +40,12 @@ $table->define_headers($headers);
 $table->setup();
 
 if (!$table->is_downloading()) {
-    $PAGE->requires->js_call_amd('report_kent/reports', 'init_menu_category', array('#menucategory', 'studentactivity', 'category'));
+    $catdropdown = $table->category_dropdown('studentactivity', $category);
 
     echo $OUTPUT->header();
     echo $OUTPUT->heading('Student Activity');
 
-    // Allow restriction by category.
-    $select = array(
-        0 => "All"
-    );
-    $categories = $DB->get_records('course_categories', null, 'name', 'id,name');
-    foreach ($categories as $obj) {
-        $select[$obj->id] = $obj->name;
-    }
-    echo html_writer::select($select, 'category', $category);
+    echo $catdropdown;
 }
 
 // Write close here, this could take a while...

@@ -52,6 +52,23 @@ class report_table extends \table_sql
     }
 
     /**
+     * Produce a category select dropdown.
+     */
+    public function category_dropdown($report, $current) {
+        global $DB, $PAGE;
+
+        $PAGE->requires->js_call_amd('report_kent/reports', 'init_menu_category', array('#menucategory', $report, 'category'));
+
+        // Allow restriction by category.
+        $categories = array(
+            0 => "All"
+        );
+
+        $categories += \coursecat::make_categories_list();
+        return \html_writer::select($categories, 'category', $current);
+    }
+
+    /**
      * Setup the table.
      */
     public function setup() {

@@ -35,20 +35,12 @@ $table->define_headers(array("Course", "File count", "Total file size"));
 $table->setup();
 
 if (!$table->is_downloading()) {
-    $PAGE->requires->js_call_amd('report_kent/reports', 'init_menu_category', array('#menucategory', 'filesize', 'category'));
+    $catdropdown = $table->category_dropdown('filesize', $category);
 
     echo $OUTPUT->header();
     echo $OUTPUT->heading('Filesize Report');
 
-    // Allow restriction by category.
-    $select = array(
-        0 => "All"
-    );
-    $categories = $DB->get_records('course_categories', null, 'name', 'id,name');
-    foreach ($categories as $obj) {
-        $select[$obj->id] = $obj->name;
-    }
-    echo html_writer::select($select, 'category', $category);
+    echo $catdropdown;
 }
 
 $results = \report_kent\reports\filesize::get_result_set($category);
