@@ -53,7 +53,7 @@ $table->define_headers(array(
 $table->setup();
 
 if (!$table->is_downloading()) {
-    $PAGE->requires->js_call_amd('report_kent/reports', 'init_manual_toggle', array());
+    $PAGE->requires->js_call_amd('report_kent/reports', 'init_manual_toggle', array('#excludemanual', '/report/kent/reports/overview/index.php?excludemanual='));
 
     echo $OUTPUT->header();
     echo $OUTPUT->heading("Kent Overview Report");
