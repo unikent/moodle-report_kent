@@ -44,6 +44,8 @@ $table->define_headers(array(
     'Tii submissions',
     'Tii grademark inboxes',
     'Tii grademark assignments',
+    'Moodle Assignments',
+    'Moodle Assignment Submissions',
     'KP block',
     'KP recordings',
     'Quiz modules'
@@ -101,6 +103,8 @@ foreach ($report->get_categories() as $category) {
             $course->count_turnitin_submissions(),
             $course->count_grademark_inboxes(),
             $course->count_turnitin_grades(),
+            $course->get_activity_count('assign'),
+            $course->count_assignment_submissions(),
             $panoptoblocks > 0 ? 'Yes' : 'No',
             $panoptoblocks > 0 ? $course->count_panopto_recordings() : 0,
             $course->get_activity_count('quiz')

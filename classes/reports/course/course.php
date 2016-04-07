@@ -68,6 +68,7 @@ class course
             $content[$id]->sdsenrolments = 0;
             $content[$id]->blocks = array();
             $content[$id]->activities = array();
+            $content[$id]->assignsubs = 0;
             $content[$id]->modules = 0;
             $content[$id]->distinct_modules = 0;
             $content[$id]->sections = 0;
@@ -123,6 +124,21 @@ SQL;
         foreach ($DB->get_records_sql($sql) as $data) {
             $content[$data->courseid]->modules = $data->cnt;
             $content[$data->courseid]->distinct_modules = $data->cnt2;
+        }
+
+        // Build assign sub info.
+        $sql = <<<SQL
+            SELECT c.id as courseid, COALESCE(COUNT(asub.id), 0) as cnt
+            FROM {course} c
+            LEFT OUTER JOIN {assign} a
+                ON a.course = c.id
+            LEFT OUTER JOIN {assign_submission} asub
+                ON asub.assignment = a.id
+            GROUP BY c.id
+SQL;
+
+        foreach ($DB->get_records_sql($sql) as $data) {
+            $content[$data->courseid]->assignsubs = $data->cnt;
         }
 
         // Build block info.
@@ -336,6 +352,14 @@ SQL;
         }
 
         return $total;
+    }
+
+    /**
+     * Return number of assignment submissions.
+     */
+    public function count_assignment_submissions() {
+        $info = $this->get_fast_info();
+        return $info->assignsubs;
     }
 
     /**
