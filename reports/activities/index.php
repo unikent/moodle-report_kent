@@ -33,7 +33,7 @@ foreach ($records as $activity) {
     $headers[] = get_string('modulename', 'mod_' . $activity->name);
 }
 
-$table = new \report_kent\report_table('reportkent_activities', 10);
+$table = new \report_kent\report_table('reportkent_activities');
 $table->sortable(false);
 $table->define_headers($headers);
 $table->setup();
@@ -46,11 +46,12 @@ if (!$table->is_downloading()) {
 // Write close here, this could take a while...
 \core\session\manager::write_close();
 
+$categories = \coursecat::make_categories_list();
 $report = new \report_kent\reports\course\core();
 foreach ($report->get_categories() as $category) {
     $link = \html_writer::link(new \moodle_url('/report/kent/reports/activities/category.php', array(
         'category' => $category->id
-    )), $category->name);
+    )), $categories[$category->id]);
 
     $row = array($link);
     foreach ($records as $activity) {
