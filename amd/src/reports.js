@@ -42,7 +42,6 @@ define(['jquery', 'core/url'], function($, url) {
         },
 
         init_ws: function(selector, webservice, rowarg, colarg, headings) {
-            console.log(headings);
             $(selector).on('click', function() {
                 if ($(this).html() == '0') {
                     return;
