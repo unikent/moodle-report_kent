@@ -15,9 +15,9 @@
     along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 }}
 {{!
-    @template report_kent/popout_tables
+    @template report_kent/course_row
 
-    This is a table popout for reports.
+    This returns a set of rows for a table based on course information.
 
     Classes required for JS:
     * none
@@ -26,21 +26,22 @@
     * none
 
     Context variables required for this template:
-    * headings Table headings.
-    * rows Table rows.
+    * baseurl A base URL for .. urls.
+    * courses An array of arrays, each element of the array is printed as a separate td.
 
     Example context (json):
     {
-        "headings": "<tr><th>Hey</th></tr>",
-        "rows": "<tr><td>There</td></tr>"
+        "baseurl": "https://moodle.kent.ac.uk/2015/",
+        "courses": array(object('id' => 1, 'shortname' => 'hey', 'fullname' => 'there'))
     }
 
 }}
-<table>
-    <tr>
-        {{#headings}}
-            <td>{{.}}</td>
-        {{/headings}}
-    </tr>
-    {{& rows}}
-</table>
+{{#courses}}
+<tr>
+    <td><a href="{{baseurl}}/course/view.php?id={{id}}" target="_blank">{{shortname}}</a></td>
+    <td>{{fullname}}</td>
+    {{#count}}
+        <td>{{count}}</td>
+    {{/count}}
+</tr>
+{{/courses}}

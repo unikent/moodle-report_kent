@@ -50,7 +50,8 @@ if (!$table->is_downloading()) {
         '.cell',
         'report_kent_get_courses_for_activity',
         'categoryid',
-        'moduleid'
+        'moduleid',
+        array('Shortname', 'Fullname', 'Count')
     ));
 
     echo $OUTPUT->header();

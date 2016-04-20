@@ -41,24 +41,28 @@ define(['jquery', 'core/url'], function($, url) {
             });
         },
 
-        init_ws: function(selector, webservice, rowarg, colarg) {
-            var rowre = new RegExp(rowarg + "_([a-z0-9]*)", "g");
-            var colre = new RegExp(colarg + "_([a-z0-9]*)", "g");
-
+        init_ws: function(selector, webservice, rowarg, colarg, headings) {
+            console.log(headings);
             $(selector).on('click', function() {
+                if ($(this).html() == '0') {
+                    return;
+                }
+
                 // Extract data.
+                var rowre = new RegExp(rowarg + "_([a-z0-9]*)", "g");
+                var colre = new RegExp(colarg + "_([a-z0-9]*)", "g");
                 var args = {};
 
                 // First, row data.
                 var rowdata = rowre.exec($(this).parent().attr('class'));
-                if (rowdata.length != 2) {
+                if (!rowdata || rowdata.length != 2) {
                     return;
                 }
                 args[rowarg] = rowdata[1];
 
                 // Second, column data.
                 var coldata = colre.exec($(this).attr('class'));
-                if (coldata.length != 2) {
+                if (!coldata || coldata.length != 2) {
                     return;
                 }
                 args[colarg] = coldata[1];
@@ -70,9 +74,16 @@ define(['jquery', 'core/url'], function($, url) {
                     }]);
 
                     ajaxpromises[0].done(function(data) {
-                        console.log(data);
-                        templates.render('report_kent/popout_table', data).done(function(html) {
-                            notification.alert(html);
+                        templates.render('report_kent/course_row', {
+                            baseurl: M.cfg.wwwroot,
+                            courses: data
+                        }).done(function(rows) {
+                            templates.render('report_kent/popout_table', {
+                                headings: headings,
+                                rows: rows
+                            }).done(function(html) {
+                                notification.alert(html);
+                            }.bind(this)).fail(notification.exception);
                         }.bind(this)).fail(notification.exception);
                     });
 
