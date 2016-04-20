@@ -24,6 +24,6 @@
 
 defined('MOODLE_INTERNAL') || die;
 
-$plugin->version   = 2016030102;
+$plugin->version   = 2016042000;
 $plugin->requires  = 2015111602;
 $plugin->component = 'report_kent';

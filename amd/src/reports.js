@@ -39,6 +39,46 @@ define(['jquery', 'core/url'], function($, url) {
                     window.location = url.relativeUrl(uri + '0');
                 }
             });
+        },
+
+        init_ws: function(selector, webservice, rowarg, colarg) {
+            var rowre = new RegExp(rowarg + "_([a-z0-9]*)", "g");
+            var colre = new RegExp(colarg + "_([a-z0-9]*)", "g");
+
+            $(selector).on('click', function() {
+                // Extract data.
+                var args = {};
+
+                // First, row data.
+                var rowdata = rowre.exec($(this).parent().attr('class'));
+                if (rowdata.length != 2) {
+                    return;
+                }
+                args[rowarg] = rowdata[1];
+
+                // Second, column data.
+                var coldata = colre.exec($(this).attr('class'));
+                if (coldata.length != 2) {
+                    return;
+                }
+                args[colarg] = coldata[1];
+
+                require(['core/ajax', 'core/templates', 'core/notification'], function(ajax, templates, notification) {
+                    var ajaxpromises = ajax.call([{
+                        methodname: webservice,
+                        args: args
+                    }]);
+
+                    ajaxpromises[0].done(function(data) {
+                        console.log(data);
+                        templates.render('report_kent/popout_table', data).done(function(html) {
+                            notification.alert(html);
+                        }.bind(this)).fail(notification.exception);
+                    });
+
+                    ajaxpromises[0].fail(notification.exception);
+                });
+            });
         }
     };
 });

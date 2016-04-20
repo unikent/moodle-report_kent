@@ -110,7 +110,7 @@ class activities extends external_api
         return new external_multiple_structure(new external_single_structure(array(
             'id' => new external_value(PARAM_INT, 'The module ID.'),
             'shortname' => new external_value(PARAM_TEXT, 'The module shortname.'),
-            'fullname' => new external_value(PARAM_INT, 'The module fullname.'),
+            'fullname' => new external_value(PARAM_TEXT, 'The module fullname.'),
             'count' => new external_value(PARAM_INT, 'The activity count.')
         )));
     }

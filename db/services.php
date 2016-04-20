@@ -27,7 +27,7 @@ $services = array(
         'functions' => array (
             'report_kent_get_courses_for_activity'
         ),
-        'requiredcapability' => '',
+        'requiredcapability' => 'moodle/site:config',
         'restrictedusers' => 0,
         'enabled' => 1
     )
