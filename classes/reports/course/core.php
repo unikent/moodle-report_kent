@@ -39,10 +39,11 @@ class core
     public function get_categories() {
         global $DB;
 
-        $categories = $DB->get_records('course_categories');
+        $categories = $DB->get_recordset('course_categories');
         foreach ($categories as $category) {
             yield new category($category);
         }
+        $categories->close();
     }
 
     /**
