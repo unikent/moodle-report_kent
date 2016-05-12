@@ -25,10 +25,10 @@
 require(dirname(__FILE__) . '/../../../../config.php');
 require_once($CFG->libdir . '/adminlib.php');
 
-admin_externalpage_setup('reportconnectcourse', '', null, '', array('pagelayout' => 'report'));
-
 // Allow restriction by category.
 $category = optional_param('category', 0, PARAM_INT);
+
+admin_externalpage_setup('reportconnectcourse', '', array('category' => $category), '', array('pagelayout' => 'report'));
 
 $table = new \report_kent\report_table('reportkent_connect');
 $table->define_headers(array(

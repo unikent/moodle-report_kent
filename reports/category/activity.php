@@ -25,11 +25,23 @@
 require(dirname(__FILE__) . '/../../../../config.php');
 require_once($CFG->libdir . '/adminlib.php');
 
-admin_externalpage_setup('coursemodulecountsreport', '', null, '', array(
+$activity = optional_param('activity', null, PARAM_PLUGIN);
+
+admin_externalpage_setup('coursemodulecountsreport', '', array('activity' => $activity), '', array(
     'pagelayout' => 'report'
 ));
 
-$activity = required_param('activity', PARAM_PLUGIN);
+// Display activity chooser if we have not yet chosen one.
+if (!$activity) {
+    echo $OUTPUT->header();
+    echo $OUTPUT->heading("Category-Based Activity Report");
+
+    $form = new \report_kent\forms\activity_select();
+    $form->display();
+
+    echo $OUTPUT->footer();
+    die;
+}
 
 $table = new \report_kent\report_table('reportkent_catact');
 $table->sortable(false);

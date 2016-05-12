@@ -27,7 +27,7 @@ require_once($CFG->libdir . '/adminlib.php');
 
 $role = optional_param('role', 0, PARAM_INT);
 
-admin_externalpage_setup('reportkentplayer');
+admin_externalpage_setup('reportkentplayer', '', array('role' => $role));
 
 $table = new \report_kent\report_table('reportkent_kentplayer');
 $table->sortable(false);

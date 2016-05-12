@@ -25,9 +25,9 @@
 require(dirname(__FILE__) . '/../../../../config.php');
 require_once($CFG->libdir . '/adminlib.php');
 
-admin_externalpage_setup('reportstudentactivity', '', null, '', array('pagelayout' => 'report'));
-
 $category = optional_param('category', 0, PARAM_INT);
+
+admin_externalpage_setup('reportstudentactivity', '', array('category' => $category), '', array('pagelayout' => 'report'));
 
 $headers = array('Course');
 foreach (\report_kent\reports\studentactivity::get_types() as $type) {

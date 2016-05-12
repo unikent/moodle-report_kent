@@ -25,10 +25,10 @@
 require(dirname(__FILE__) . '/../../../../config.php');
 require_once($CFG->libdir . '/adminlib.php');
 
-admin_externalpage_setup('reportdeadlines', '', null, '', array('pagelayout' => 'report'));
-
 // Page parameters.
 $showpast = optional_param('showpast', 0, PARAM_BOOL);
+
+admin_externalpage_setup('reportdeadlines', '', array('showpast' => $showpast), '', array('pagelayout' => 'report'));
 
 $table = new \report_kent\report_table('reportkent_filesize');
 $table->sortable(false);

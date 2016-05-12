@@ -27,7 +27,7 @@ require_once($CFG->libdir . '/adminlib.php');
 
 $categoryid = required_param('category', PARAM_INT);
 
-admin_externalpage_setup('reportactivitiesreport', '', null, '', array('pagelayout' => 'report'));
+admin_externalpage_setup('reportactivitiesreport', '', array('category' => $categoryid), '', array('pagelayout' => 'report'));
 
 $records = $DB->get_records('modules', array('visible' => 1), '', 'id, name');
 $headers = array('Category');

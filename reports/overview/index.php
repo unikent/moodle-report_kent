@@ -26,11 +26,11 @@ require(dirname(__FILE__) . '/../../../../config.php');
 require_once($CFG->libdir . '/adminlib.php');
 require_once($CFG->libdir . "/coursecatlib.php");
 
-admin_externalpage_setup('kentoverviewreport', '', null, '', array(
+$excludemanual = optional_param('excludemanual', false, PARAM_BOOL);
+
+admin_externalpage_setup('kentoverviewreport', '', array('excludemanual' => $excludemanual), '', array(
     'pagelayout' => 'report'
 ));
-
-$excludemanual = optional_param('excludemanual', false, PARAM_BOOL);
 
 // Create Table.
 $table = new \report_kent\report_table('kentoverviewreport');

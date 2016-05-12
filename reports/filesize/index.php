@@ -25,9 +25,9 @@
 require(dirname(__FILE__) . '/../../../../config.php');
 require_once($CFG->libdir . '/adminlib.php');
 
-admin_externalpage_setup('reportfilesize', '', null, '', array('pagelayout' => 'report'));
-
 $category = optional_param('category', 0, PARAM_INT);
+
+admin_externalpage_setup('reportfilesize', '', array('category' => $category), '', array('pagelayout' => 'report'));
 
 $table = new \report_kent\report_table('reportkent_filesize');
 $table->sortable(false);
