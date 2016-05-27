@@ -158,7 +158,7 @@ SQL;
 
         // Build section info.
         $sql = <<<SQL
-            SELECT c.id as courseid, COALESCE(COUNT(cs.id), 0) as cnt, LENGTH(GROUP_CONCAT(cs.summary)) as len
+            SELECT c.id as courseid, COALESCE(COUNT(cs.id), 0) as cnt, LENGTH(GROUP_CONCAT(cs.summary SEPARATOR '')) as len
             FROM {course} c
             LEFT OUTER JOIN {course_sections} cs
                 ON cs.course = c.id
