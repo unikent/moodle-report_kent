@@ -244,7 +244,7 @@ SQL;
         $state = self::STATUS_ACTIVE;
         if ($info->enrolments == 0) {
             $state = self::STATUS_UNUSED;
-        } else if ($info->modules == 0 && $info->section_length == 0) {
+        } else if ($info->modules <= 2 && $info->section_length == 0) {
             $state = self::STATUS_EMPTY;
         } else if (!$this->visible) {
             $state = self::STATUS_RESTING;
