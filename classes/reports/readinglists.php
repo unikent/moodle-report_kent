@@ -39,21 +39,19 @@ class readinglists
 
         $cache = \cache::make('report_kent', 'kentreports');
         $coursedata = $cache->get('readinglistdata');
-        if ($coursedata) {
-            return $coursedata;
-        }
 
         // Build the data.
-        $data = array();
         $courses = $DB->get_records('course');
         foreach ($courses as $course) {
-            if ($course->id > 1) {
-                $data[$course->id] = static::rebuild_course($course, false);
+            if ($course->id <= 1 || isset($coursedata[$course->id])) {
+                continue;
             }
+
+            $coursedata[$course->id] = static::rebuild_course($course, false);
         }
 
-        $cache->set('readinglistdata', $data);
-        return $data;
+        $cache->set('readinglistdata', $coursedata);
+        return $coursedata;
     }
 
     /**
