@@ -29,6 +29,7 @@ admin_externalpage_setup('readinglistcoursereport', '', null, '', array(
     'pagelayout' => 'report'
 ));
 
+$showall = optional_param('showall', false, PARAM_BOOL);
 $action = optional_param('action', '', PARAM_ALPHA);
 if ($action == 'refresh') {
     $courseid = required_param('courseid', PARAM_INT);
@@ -49,9 +50,20 @@ $table->define_headers(array(
 $table->setup();
 
 if (!$table->is_downloading()) {
+    $PAGE->requires->js_call_amd('report_kent/reports', 'init_manual_toggle', array(
+        '#showall',
+        '/report/kent/reports/courses/readinglists.php?showall='
+    ));
+
     echo $OUTPUT->header();
     echo $OUTPUT->heading("Reading lists Report");
+    echo \html_writer::checkbox('showall', true, $showall, 'Show all', array(
+        'id' => 'showall'
+    ));
 }
+
+// This will take a while.
+\core\session\manager::write_close();
 
 $tick = \html_writer::tag('i', '', array('class' => 'fa fa-check'));
 $cross = \html_writer::tag('i', '', array('class' => 'fa fa-times'));
@@ -59,6 +71,9 @@ $cross = \html_writer::tag('i', '', array('class' => 'fa fa-times'));
 $coursedata = report_kent\reports\readinglists::get_data();
 foreach ($coursedata as $id => $course) {
     $course = (object)$course;
+    if (!$showall && $course->currentlist) {
+        continue;
+    }
 
     $courseurl = new \moodle_url('/course/view.php', array(
         'id' => $id
@@ -71,7 +86,7 @@ foreach ($coursedata as $id => $course) {
     ));
     $action = $OUTPUT->action_link($actionurl, 'Refresh');
 
-    $table->add_data(array($coursecell, $course->currentlist ? $tick : $cross, $course->pastlist ? $tick : $cross, $action));
+    $table->add_data(array($coursecell, $cross, $course->pastlist ? $tick : $cross, $action));
 }
 
 $table->finish_output();
