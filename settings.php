@@ -106,6 +106,12 @@ if ($hassiteconfig) {
         new \moodle_url("/report/kent/reports/turnitinaudit/grademark.php")
     ));
 
+    $category->add('kentreports', new admin_externalpage(
+        'readinglistcoursereport',
+        'Reading Lists report',
+        new \moodle_url("/report/kent/reports/courses/readinglists.php")
+    ));
+
     $ADMIN->add('reports', $category);
 
     // No report settings.
