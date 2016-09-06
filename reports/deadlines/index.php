@@ -44,7 +44,10 @@ $table->define_headers(array(
 $table->setup();
 
 if (!$table->is_downloading()) {
-    $PAGE->requires->js_call_amd('report_kent/reports', 'init_manual_toggle', array('#showpastchk', '/report/kent/reports/deadlines/index.php?showpast='));
+    $PAGE->requires->js_call_amd('report_kent/reports', 'init_manual_toggle', array(
+        '#showpastchk',
+        '/report/kent/reports/deadlines/index.php?showpast='
+    ));
 
     echo $OUTPUT->header();
     echo $OUTPUT->heading('Deadlines Report');

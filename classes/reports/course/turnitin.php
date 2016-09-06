@@ -89,7 +89,7 @@ SQL;
         $courses = $category->get_courses();
         foreach ($courses as $course) {
             if (self::uses_grademark($course->id)) {
-               $total++;
+                $total++;
             }
         }
 

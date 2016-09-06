@@ -32,8 +32,7 @@ class turnitintool {
 
         $where = $showpast ? '' : 'WHERE tp.dtdue > unix_timestamp()';
 
-        $sql =
-<<<SQL
+        $sql = <<<SQL
     SELECT
         a.id as id,
         'Turnitin' as type,

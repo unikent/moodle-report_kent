@@ -32,8 +32,7 @@ class assign {
 
         $where = $showpast ? '' : 'WHERE a.duedate > unix_timestamp()';
 
-        $sql =
-<<<SQL
+        $sql = <<<SQL
     SELECT
         b.assign_id as id,
         'Assign' as type,

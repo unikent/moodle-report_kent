@@ -80,7 +80,9 @@ class course
 
         // Build enrolments.
         $sql = <<<SQL
-            SELECT c.id as courseid, COALESCE(COUNT(ra.id), 0) cnt, COALESCE(SUM(CASE WHEN r.shortname = 'sds_student' THEN 1 ELSE 0 END), 0) cnt2
+            SELECT
+                c.id as courseid, COALESCE(COUNT(ra.id), 0) cnt,
+                COALESCE(SUM(CASE WHEN r.shortname = 'sds_student' THEN 1 ELSE 0 END), 0) cnt2
             FROM {course} c
             INNER JOIN {context} ctx
                     ON ctx.instanceid = c.id
